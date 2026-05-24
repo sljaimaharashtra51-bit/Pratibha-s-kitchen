@@ -3,203 +3,547 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pratibha's Kitchen - Online Meals</title>
+    <title>Pratibha's Kitchen - Order Online</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background: #0f0f1e; color: #fff; }
- .header { background: linear-gradient(90deg, #8A2BE2, #00FFFF); padding: 20px; text-align: center; position: relative; }
- .banner-img { width: 100%; max-width: 600px; height: auto; border-radius: 15px; margin: 0 auto 15px auto; display: block; box-shadow: 0 4px 20px rgba(0,0,0,0.5); border: 3px solid #FFD700; }
- .logo { font-size: 2.5rem; font-weight: 900; background: linear-gradient(45deg, #FFD700, #FF8C00, #FF1493); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 2px 2px 8px rgba(0,0,0,0.3); margin-bottom: 5px; }
- .logo-sub { font-size: 0.9rem; color: #000; font-weight: bold; letter-spacing: 2px; }
- .header-btns { position: absolute; top: 15px; right: 20px; display: flex; gap: 10px; }
- .lang-toggle,.track-btn { background: #000; color: #00FFFF; border: 2px solid #00FFFF; padding: 8px 15px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 0.85rem; }
- .track-btn { background: linear-gradient(90deg, #FFD700, #FF8C00); color: #000; border-color: #FFD700; }
- .header h1 { font-size: 1.5rem; margin-top: 10px; }
- .search-bar { padding: 15px 30px 0 30px; }
- .search-bar input { width: 100%; padding: 12px 20px; border-radius: 25px; border: 2px solid #8A2BE2; background: #16213e; color: #fff; font-size: 1rem; }
- .category-filters { display: flex; gap: 10px; padding: 15px 30px; overflow-x: auto; scrollbar-width: none; }
- .category-filters::-webkit-scrollbar { display: none; }
- .cat-btn { background: #16213e; border: 2px solid #8A2BE2; color: #fff; padding: 8px 18px; border-radius: 20px; cursor: pointer; white-space: nowrap; font-weight: bold; transition: all 0.3s; }
- .cat-btn.active { background: linear-gradient(90deg, #8A2BE2, #00FFFF); color: #000; }
- .menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 0 30px 100px 30px; }
- .item { background: #16213e; border-radius: 15px; padding: 20px; border: 2px solid #8A2BE2; position: relative; transition: transform 0.3s; }
- .item:hover { transform: translateY(-5px); }
- .item img { width: 100%; height: 180px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; }
- .item h3 { color: #00FFFF; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
- .veg-dot { width: 12px; height: 12px; border-radius: 2px; border: 2px solid #00AA00; background: #00AA00; display: inline-block; }
- .non-veg-dot { width: 12px; height: 12px; border-radius: 2px; border: 2px solid #FF0000; background: #FF0000; display: inline-block; }
- .tag { position: absolute; top: 30px; left: 30px; padding: 4px 10px; border-radius: 5px; font-size: 0.75rem; font-weight: bold; z-index: 1; }
- .tag-new { background: #FF1493; color: #fff; }
- .tag-chef { background: #FFD700; color: #000; }
- .tag-best { background: linear-gradient(90deg, #FF4500, #FF8C00); color: #fff; animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { box-shadow: 0 0 5px #FF4500; } 50% { box-shadow: 0 0 15px #FF8C00; } }
- .price { font-size: 1.3rem; color: #8A2BE2; font-weight: bold; }
-        button { background: linear-gradient(90deg, #25D366, #128C7E); color: white; border: none; padding: 12px 25px; border-radius: 12px; cursor: pointer; font-size: 1rem; width: 100%; margin-top: 10px; font-weight: bold; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); transition: all 0.3s ease; }
-        button:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(37, 211, 102, 0.6); }
- .cart { position: fixed; bottom: 20px; right: 20px; background: linear-gradient(90deg, #25D366, #128C7E); color: #fff; padding: 15px 25px; border-radius: 50px; font-weight: bold; z-index: 100; cursor: pointer; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); transition: all 0.3s ease; }
- .cart:hover { transform: scale(1.05); }
- .no-photo { background: #2a2a4a; height: 180px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #8A2BE2; margin-bottom: 10px; font-weight: bold; text-align: center; font-size: 0.9rem; }
- .modal { display: none; position: fixed; z-index: 200; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); }
- .modal-content { background: #16213e; margin: 5% auto; padding: 25px; border: 2px solid #8A2BE2; border-radius: 15px; width: 90%; max-width: 450px; max-height: 85vh; overflow-y: auto; }
- .modal-content h2 { color: #00FFFF; margin-bottom: 20px; text-align: center; }
- .modal-content input,.modal-content select { width: 100%; padding: 12px; margin: 8px 0; border: 2px solid #8A2BE2; border-radius: 8px; background: #0f0f1e; color: #fff; font-size: 1rem; }
- .modal-content input::placeholder { color: #888; }
- .modal-btns { display: flex; gap: 10px; margin-top: 15px; }
- .cancel-btn { background: linear-gradient(90deg, #ff4444, #cc0000); }
- .status-box { background: #0f0f1e; padding: 15px; border-radius: 10px; margin: 15px 0; border: 1px solid #8A2BE2; }
- .status-step { display: flex; align-items: center; margin: 10px 0; opacity: 0.3; }
- .status-step.active { opacity: 1; color: #00FFFF; font-weight: bold; }
- .status-dot { width: 20px; height: 20px; border-radius: 50%; background: #444; margin-right: 10px; }
- .status-step.active.status-dot { background: #00FFFF; box-shadow: 0 0 10px #00FFFF; }
- .order-info { background: #2a2a4a; padding: 10px; border-radius: 8px; margin-top: 10px; font-size: 0.9rem; }
- .upi-section { background: #0f0f1e; padding: 15px; border-radius: 10px; margin: 15px 0; border: 2px solid #FFD700; text-align: center; }
- .upi-qr { width: 150px; height: 150px; margin: 10px auto; background: #fff; padding: 10px; border-radius: 10px; }
- .upi-id { background: #2a2a4a; padding: 10px; border-radius: 8px; margin: 10px 0; font-family: monospace; display: flex; justify-content: space-between; align-items: center; }
- .copy-btn { background: #8A2BE2; padding: 5px 15px; border-radius: 5px; font-size: 0.8rem; margin: 0; width: auto; }
- .coupon-box { display: flex; gap: 10px; margin: 15px 0; }
- .coupon-box input { flex: 1; margin: 0; }
- .apply-btn { width: auto; padding: 12px 20px; margin: 0; }
- .discount-text { color: #00FF00; font-weight: bold; text-align: center; margin: 10px 0; }
- .total-row { display: flex; justify-content: space-between; margin: 8px 0; font-size: 1rem; }
- .total-row.final { border-top: 2px solid #8A2BE2; padding-top: 10px; font-size: 1.2rem; font-weight: bold; color: #FFD700; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        :root {
+            --bg: linear-gradient(135deg, #0F172A, #1E1B4B, #312E81);
+            --card: linear-gradient(135deg, #1E293B, #334155);
+            --text: #fff;
+            --text2: #94A3B8;
+        }
+        body.light {
+            --bg: linear-gradient(135deg, #F8FAFC, #E2E8F0, #CBD5E1);
+            --card: linear-gradient(135deg, #FFFFFF, #F1F5F9);
+            --text: #0F172A;
+            --text2: #475569;
+        }
+        body { background: var(--bg); color: var(--text); min-height: 100vh; transition: 0.3s; }
+        .header { background: var(--card); padding: 15px; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(138,43,226,0.4); }
+        .header-btns { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 5px; }
+        .btn { border: none; color: white; padding: 6px 12px; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 11px; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        .track-btn { background: linear-gradient(45deg, #FF6B6B, #FF8E53); }
+        .lang-toggle { background: linear-gradient(45deg, #4ECDC4, #44A08D); padding: 6px 10px; font-size: 10px; }
+        .theme-toggle { background: linear-gradient(45deg, #667EEA, #764BA2); }
+        .admin-btn { background: linear-gradient(45deg, #FF416C, #FF4B2B); }
+        .party-btn { background: linear-gradient(45deg, #F7971E, #FFD200); }
+        .chat-btn { background: linear-gradient(45deg, #25D366, #128C7E); }
+        .logo-container { margin: 10px 0; position: relative; display: inline-block; }
+        .main-logo { width: 120px; height: 120px; object-fit: contain; border-radius: 50%; border: 3px solid; border-image: linear-gradient(45deg, #FFD700, #FF6347, #8A2BE2) 1; box-shadow: 0 0 20px rgba(255,215,0,0.6); }
+        .crown { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); font-size: 30px; animation: rotateCrown 3s linear infinite; }
+        @keyframes rotateCrown {
+            0% { transform: translateX(-50%) rotate(0deg); }
+            100% { transform: translateX(-50%) rotate(360deg); }
+        }
+        .logo-text { font-size: 28px; font-weight: 800; background: linear-gradient(90deg, #FFD700, #FFA500, #FF6347, #FF1493, #8A2BE2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-top: 5px; }
+        .logo-sub { font-size: 14px; color: var(--text2); margin-top: 5px; }
+        .banner { width: 100%; height: 180px; object-fit: cover; border-radius: 0 0 20px 20px; border: 3px solid; border-image: linear-gradient(45deg, #FF6B6B, #4ECDC4, #45B7D1, #96CEB4, #FFEAA7) 1; margin-top: 10px; }
+        .container { padding: 15px; max-width: 700px; margin: auto; }
+        .search-bar { width: 100%; padding: 12px; border-radius: 25px; border: 2px solid #475569; background: var(--card); color: var(--text); margin-bottom: 15px; }
+        .filter-row { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
+        .filter-btn { padding: 8px 15px; border-radius: 20px; border: none; cursor: pointer; font-weight: 600; }
+        .filter-btn.active { box-shadow: 0 0 15px rgba(255,255,255,0.5); transform: scale(1.05); }
+        .veg-btn { background: #22C55E; color: white; }
+        .nonveg-btn { background: #EF4444; color: white; }
+        .bestseller-btn { background: linear-gradient(45deg, #F59E0B, #EF4444); color: white; }
+        .categories { display: flex; gap: 10px; overflow-x: auto; padding: 10px 0; margin-bottom: 15px; }
+        .cat-btn { border: none; color: white; padding: 10px 20px; border-radius: 25px; white-space: nowrap; cursor: pointer; font-weight: 700; transition: 0.3s; }
+        .cat-btn[data-cat="all"] { background: linear-gradient(45deg, #FF416C, #FF4B2B); }
+        .cat-btn[data-cat="chicken"] { background: linear-gradient(45deg, #F85032, #E73827); }
+        .cat-btn[data-cat="rice"] { background: linear-gradient(45deg, #56AB2F, #A8E063); }
+        .cat-btn[data-cat="chinese"] { background: linear-gradient(45deg, #F7971E, #FFD200); }
+        .cat-btn[data-cat="pizza"] { background: linear-gradient(45deg, #834D9B, #D04ED6); }
+        .cat-btn[data-cat="roti"] { background: linear-gradient(45deg, #00C9FF, #92FE9D); }
+        .cat-btn[data-cat="snacks"] { background: linear-gradient(45deg, #FC466B, #3F5EFB); }
+        .cat-btn[data-cat="maharashtrian"] { background: linear-gradient(45deg, #11998E, #38EF7D); }
+        .cat-btn[data-cat="pavbhaji"] { background: linear-gradient(45deg, #FF512F, #F09819); }
+        .cat-btn.active { transform: scale(1.1); box-shadow: 0 4px 15px rgba(255,255,255,0.4); }
+        .products { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; min-height: 200px; }
+        .product-card { border-radius: 15px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: 0.3s; position: relative; }
+        .product-card:hover { transform: translateY(-5px); }
+        .product-card img { width: 100%; height: 140px; object-fit: cover; }
+        .veg-dot { position: absolute; top: 10px; left: 10px; width: 20px; height: 20px; border: 2px solid; background: white; display: flex; align-items: center; justify-content: center; }
+        .veg-dot.veg { border-color: #22C55E; }
+        .veg-dot.nonveg { border-color: #EF4444; }
+        .veg-dot span { width: 10px; height: 10px; border-radius: 50%; }
+        .veg-dot.veg span { background: #22C55E; }
+        .veg-dot.nonveg span { background: #EF4444; }
+        .bestseller { position: absolute; top: 10px; right: 10px; background: linear-gradient(45deg, #F59E0B, #EF4444); color: white; padding: 4px 8px; border-radius: 10px; font-size: 10px; font-weight: 800; }
+        .product-info { padding: 12px; }
+        .product-name { font-weight: 700; font-size: 15px; margin-bottom: 5px; line-height: 1.2; }
+        .product-price { color: #00FF88; font-weight: 800; font-size: 18px; margin-bottom: 5px; text-shadow: 0 0 10px rgba(0,255,136,0.5); }
+        .rating { color: #FBBF24; font-size: 12px; margin-bottom: 10px; cursor: pointer; }
+        .spice-select { width: 100%; padding: 5px; border-radius: 5px; background: var(--card); color: var(--text); border: 1px solid #475569; margin-bottom: 8px; font-size: 12px; }
+        .item-note { width: 100%; padding: 5px; border-radius: 5px; background: var(--card); color: var(--text); border: 1px solid #475569; margin-bottom: 8px; font-size: 11px; }
+        .add-btn { width: 100%; background: linear-gradient(45deg, #667EEA, #764BA2); border: none; color: white; padding: 10px; border-radius: 8px; font-weight: 700; cursor: pointer; box-shadow: 0 2px 10px rgba(102,126,234,0.5); }
+        .cart-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--card); padding: 15px; display: none; justify-content: space-between; align-items: center; box-shadow: 0 -4px 20px rgba(138,43,226,0.4); z-index: 99; border-top: 2px solid; border-image: linear-gradient(90deg, #FF6B6B, #4ECDC4, #45B7D1) 1; }
+        .cart-bar.show { display: flex; }
+        .view-cart-btn { background: linear-gradient(45deg, #00F260, #0575E6); color: white; border: none; padding: 12px 25px; border-radius: 25px; font-weight: 800; cursor: pointer; box-shadow: 0 2px 15px rgba(0,242,96,0.5); }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.95); z-index: 200; justify-content: center; align-items: center; }
+        .modal.show { display: flex; }
+        .modal-content { background: var(--card); width: 90%; max-width: 600px; max-height: 90vh; border-radius: 20px; padding: 20px; overflow-y: auto; border: 2px solid; border-image: linear-gradient(45deg, #FF6B6B, #4ECDC4, #45B7D1, #96CEB4) 1; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .close-btn { background: linear-gradient(45deg, #FF416C, #FF4B2B); border: none; color: white; font-size: 28px; cursor: pointer; width: 40px; height: 40px; border-radius: 50%; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding: 10px; border-radius: 10px; background: rgba(255,255,0.05); }
+        .qty-control { display: flex; align-items: center; gap: 10px; }
+        .qty-btn { background: linear-gradient(45deg, #667EEA, #764BA2); border: none; color: white; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-weight: 700; }
+        .form-input { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid #475569; background: var(--bg); color: var(--text); margin-bottom: 15px; }
+        .form-input:focus { border-image: linear-gradient(45deg, #FF6B6B, #4ECDC4) 1; outline: none; }
+        .place-order-btn { width: 100%; background: linear-gradient(45deg, #00F260, #0575E6, #764BA2); color: white; border: none; padding: 15px; border-radius: 12px; font-weight: 800; font-size: 18px; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 15px rgba(0,242,96,0.4); }
+        .coupon-box { display: flex; gap: 10px; margin: 15px 0; }
+        .coupon-box input { flex: 1; margin: 0; }
+        .apply-btn { width: auto; padding: 12px 20px; background: linear-gradient(45deg, #F7971E, #FFD200); }
+        .discount-text { color: #00FF88; font-weight: 700; margin: 10px 0; text-shadow: 0 0 10px rgba(0,255,136,0.5); }
+        .total-row { display: flex; justify-content: space-between; margin: 8px 0; }
+        .total-row.final { border-top: 2px solid; border-image: linear-gradient(90deg, #FF6B6B, #4ECDC4) 1; padding-top: 10px; font-size: 20px; font-weight: 800; }
+        .cod-text { text-align: center; background: linear-gradient(90deg, #FFD700, #FFA500); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; margin: 10px 0; font-size: 16px; }
+        .loyalty-box { background: linear-gradient(45deg, #F7971E, #FFD200); padding: 10px; border-radius: 10px; text-align: center; margin: 10px 0; color: #0F172A; font-weight: 700; }
+        .status-badge { padding: 5px 10px; border-radius: 15px; font-size: 11px; font-weight: 700; }
+        .status-Placed { background: #3B82F6; }
+        .status-Preparing { background: #F59E0B; }
+        .status-Out\ for\ Delivery { background: #8B5CF6; }
+        .status-Delivered { background: #10B981; }
+        .admin-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 12px; }
+        .admin-table th, .admin-table td { padding: 8px; border: 1px solid #475569; text-align: left; }
+        .admin-table th { background: #334155; }
+        .chart { display: flex; align-items: flex-end; height: 150px; gap: 10px; margin: 20px 0; }
+        .bar { flex: 1; background: linear-gradient(180deg, #667EEA, #764BA2); border-radius: 5px 5px 0 0; position: relative; }
+        .bar-label { position: absolute; bottom: -20px; width: 100%; text-align: center; font-size: 10px; }
+        .min-order-warning { background: #EF4444; color: white; padding: 10px; border-radius: 10px; text-align: center; margin: 10px 0; display: none; }
+        .min-order-warning.show { display: block; }
+        .combo-builder { background: rgba(139,92,246,0.2); padding: 15px; border-radius: 15px; margin: 15px 0; border: 2px dashed #8B5CF6; }
+        .rating-modal { text-align: center; }
+        .stars { font-size: 40px; margin: 20px 0; }
+        .star { cursor: pointer; color: #475569; }
+        .star.active { color: #FBBF24; }
     </style>
 </head>
 <body>
     <div class="header">
         <div class="header-btns">
-            <button class="track-btn" onclick="showTrackModal()" id="trackBtn">Track Order</button>
-            <button class="lang-toggle" onclick="toggleLang()" id="langBtn">मराठी</button>
+            <button class="btn track-btn" onclick="openModal('trackModal')">Track</button>
+            <button class="btn lang-toggle" onclick="toggleLang()">मराठी</button>
+            <button class="btn theme-toggle" onclick="toggleTheme()">🌙</button>
+            <button class="btn party-btn" onclick="openModal('partyModal')">Party Order</button>
+            <button class="btn chat-btn" onclick="openChat()">💬 Chat</button>
+            <button class="btn admin-btn" onclick="openAdmin()">Admin</button>
         </div>
-        <img src="https://i.postimg.cc/PLbRCSX7/banner.jpg" alt="Pratibha's Kitchen Banner" class="banner-img">
-        <div class="logo">PRATIBHA'S</div>
-        <div class="logo-sub">KITCHEN ✨ HOME MADE ✨</div>
-        <h1 id="title">🍽️ Online Meals</h1>
-        <p id="tagline">Meals from Chief Pratibha's Kitchen</p>
+        <div class="logo-container">
+            <div class="crown">👑</div>
+            <img src="attachment://33993512646643303" class="main-logo" alt="Pratibha's Kitchen Logo">
+            <div class="logo-text">PRATIBHA'S</div>
+            <div class="logo-sub">KITCHEN ✨</div>
+        </div>
+        <img src="https://i.postimg.cc/PJqW3h8f/banner.jpg" class="banner" alt="Banner">
     </div>
-    <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Search for Biryani, Pizza, Vada Pav..." onkeyup="filterItems()">
+
+    <div class="container">
+        <input type="text" class="search-bar" id="searchBar" placeholder="Search dishes..." onkeyup="searchItems()">
+        <div class="filter-row">
+            <button class="filter-btn veg-btn" onclick="filterVeg(true)">🟢 Veg</button>
+            <button class="filter-btn nonveg-btn" onclick="filterVeg(false)">🔴 Non-Veg</button>
+            <button class="filter-btn bestseller-btn" onclick="filterBestseller()">🔥 Bestseller</button>
+            <button class="filter-btn" style="background:#8B5CF6;color:white" onclick="openModal('comboModal')">🎁 Build Combo</button>
+        </div>
+        <div id="loyaltyBox" class="loyalty-box" style="display:none"></div>
+        <div class="categories" id="categories"></div>
+        <div class="products" id="products"></div>
     </div>
-    <div class="category-filters" id="categoryFilters"></div>
-    <div class="menu" id="menu"></div>
-    <div class="cart" id="cart" onclick="showCustomerForm()">Cart: 0 Items | ₹0</div>
-    <div id="customerModal" class="modal">
+
+    <div class="cart-bar" id="cartBar">
+        <div><span id="cartCount">0</span> Items | ₹<span id="cartTotal">0</span></div>
+        <button class="view-cart-btn" onclick="openModal('cartModal')">View Cart</button>
+    </div>
+
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
         <div class="modal-content">
-            <h2 id="formTitle">Enter Delivery Details</h2>
-            <input type="text" id="custName" placeholder="Your Name / तुमचं नाव" required>
-            <input type="text" id="custAddress" placeholder="Full Address / पूर्ण पत्ता" required>
-            <input type="text" id="custLandmark" placeholder="Landmark / जवळची खूण" required>
-            <input type="tel" id="custPhone" placeholder="Mobile Number / मोबाईल नंबर" required>
-            <select id="deliverySlot" required>
-                <option value="">Select Delivery Time / डिलिव्हरी वेळ निवडा</option>
-                <option value="morning">Morning 8 AM - 11 AM</option>
-                <option value="afternoon">Afternoon 12 PM - 3 PM</option>
-                <option value="evening">Evening 6 PM - 9 PM</option>
-            </select>
+            <div class="modal-header">
+                <h2>Your Cart</h2>
+                <button class="close-btn" onclick="closeModal('cartModal')">&times;</button>
+            </div>
+            <div id="minOrderWarning" class="min-order-warning">Minimum order ₹150 for delivery</div>
+            <div id="cartItems"></div>
             <div class="coupon-box">
-                <input type="text" id="couponCode" placeholder="Coupon Code / कूपन कोड">
-                <button class="apply-btn" onclick="applyCoupon()" id="applyCouponBtn">Apply</button>
+                <input type="text" class="form-input" id="couponCode" placeholder="Coupon / Loyalty Points">
+                <button class="apply-btn place-order-btn" onclick="applyCoupon()">Apply</button>
             </div>
-            <div id="couponMsg"></div>
-            <div class="upi-section">
-                <h3 style="color:#FFD700; margin-bottom:10px;">💳 Pay via UPI</h3>
-                <img src="https://i.postimg.cc/n9jpJKHh/santosh-upi-qr.jpg" class="upi-qr" alt="SANTOSH UPI QR">
-                <div class="upi-id">
-                    <span id="upiText">sljaimaharashtra51-1@okaxis</span>
-                    <button class="copy-btn" onclick="copyUPI()">Copy</button>
-                </div>
-                <p style="font-size:0.8rem; color:#aaa; margin-top:5px;">Name: SANTOSH Santosh</p>
-                <p style="font-size:0.8rem; color:#aaa;">Scan to pay with any UPI app</p>
+            <div id="discountText" class="discount-text"></div>
+            <div class="total-row"><span>Subtotal</span><span>₹<span id="subtotal">0</span></span></div>
+            <div class="total-row"><span>Delivery</span><span>₹40</span></div>
+            <div class="total-row final"><span>Total</span><span>₹<span id="finalTotal">40</span></span></div>
+            <div class="cod-text">💵 Cash on Delivery Only</div>
+            <input type="text" class="form-input" id="custName" placeholder="Your Name">
+            <input type="text" class="form-input" id="custPhone" placeholder="Phone Number">
+            <textarea class="form-input" id="custAddress" placeholder="Full Address" rows="3"></textarea>
+            <button class="place-order-btn" onclick="placeOrder()">Place Order on WhatsApp</button>
+            <button class="place-order-btn" style="background:linear-gradient(45deg,#3B82F6,#1D4ED8)" onclick="downloadBill()">📄 Download Bill</button>
+        </div>
+    </div>
+
+    <!-- Track Order Modal -->
+    <div class="modal" id="trackModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Track Order / History</h2>
+                <button class="close-btn" onclick="closeModal('trackModal')">&times;</button>
             </div>
-            <div id="billDetails"></div>
-            <div class="modal-btns">
-                <button class="cancel-btn" onclick="closeModal('customerModal')" id="cancelBtn">Cancel</button>
-                <button onclick="submitOrder()" id="submitBtn">Order on WhatsApp</button>
+            <input type="text" class="form-input" id="trackPhone" placeholder="Enter Your Phone Number">
+            <button class="place-order-btn" onclick="trackOrder()">Track</button>
+            <div id="trackResult" style="margin-top:20px;"></div>
+        </div>
+    </div>
+
+    <!-- Party Order Modal -->
+    <div class="modal" id="partyModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Party/Bulk Order 🎉</h2>
+                <button class="close-btn" onclick="closeModal('partyModal')">&times;</button>
+            </div>
+            <p style="margin-bottom:15px;color:var(--text2)">20+ लोकांसाठी Order? आम्हाला कळवा!</p>
+            <input type="text" class="form-input" id="partyName" placeholder="Your Name">
+            <input type="text" class="form-input" id="partyPhone" placeholder="Phone Number">
+            <input type="number" class="form-input" id="partyCount" placeholder="Number of People (Min 20)">
+            <input type="date" class="form-input" id="partyDate">
+            <textarea class="form-input" id="partyItems" rows="4" placeholder="कोणते पदार्थ हवेत? अंदाजे Quantity लिहा"></textarea>
+            <textarea class="form-input" id="partyAddress" rows="3" placeholder="Delivery Address / Venue"></textarea>
+            <button class="place-order-btn" onclick="placePartyOrder()">Send Party Order Request</button>
+        </div>
+    </div>
+
+    <!-- Combo Builder Modal -->
+    <div class="modal" id="comboModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Build Your Combo 🎁</h2>
+                <button class="close-btn" onclick="closeModal('comboModal')">&times;</button>
+            </div>
+            <p style="margin-bottom:15px;color:var(--text2)">कोणतेही 3 Items निवडा - 10% Off मिळवा!</p>
+            <div id="comboItems" style="max-height:300px;overflow-y:auto;"></div>
+            <div class="total-row final" style="margin-top:15px;"><span>Combo Total</span><span>₹<span id="comboTotal">0</span></span></div>
+            <button class="place-order-btn" onclick="addComboToCart()">Add Combo to Cart</button>
+        </div>
+    </div>
+
+    <!-- Admin Modal -->
+    <div class="modal" id="adminModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Admin Panel 🔐</h2>
+                <button class="close-btn" onclick="closeModal('adminModal')">&times;</button>
+            </div>
+            <div id="adminLogin">
+                <input type="password" class="form-input" id="adminPass" placeholder="Enter Password">
+                <button class="place-order-btn" onclick="adminLogin()">Login</button>
+            </div>
+            <div id="adminPanel" style="display:none">
+                <h3 style="margin:15px 0">📊 Analytics</h3>
+                <div id="analytics"></div>
+                <div class="chart" id="chart"></div>
+                <h3 style="margin:15px 0">📦 Orders</h3>
+                <div id="adminOrders" style="max-height:200px;overflow-y:auto;"></div>
+                <h3 style="margin:15px 0">➕ Add/Edit Item</h3>
+                <input type="number" class="form-input" id="editId" placeholder="Item ID (leave blank for new)">
+                <input type="text" class="form-input" id="editName" placeholder="Name">
+                <input type="text" class="form-input" id="editNameMr" placeholder="नाव (Marathi)">
+                <input type="number" class="form-input" id="editPrice" placeholder="Price">
+                <input type="text" class="form-input" id="editImg" placeholder="Image URL">
+                <select class="form-input" id="editCat">
+                    <option value="chicken">Chicken</option>
+                    <option value="rice">Rice & Khichdi</option>
+                    <option value="chinese">Chinese & Momos</option>
+                    <option value="pavbhaji">Pav Bhaji</option>
+                    <option value="pizza">Pizza & Pasta</option>
+                    <option value="roti">Roti & Paratha</option>
+                    <option value="snacks">Snacks</option>
+                    <option value="maharashtrian">Maharashtrian</option>
+                <select class="form-input" id="editVeg">
+                    <option value="true">Veg</option>
+                    <option value="false">Non-Veg</option>
+                </select>
+                <label><input type="checkbox" id="editBest"> Bestseller</label>
+                <button class="place-order-btn" onclick="saveItem()">Save Item</button>
+                <button class="place-order-btn" style="background:#EF4444;margin-top:10px" onclick="adminLogout()">Logout</button>
             </div>
         </div>
     </div>
-    <div id="trackModal" class="modal">
-        <div class="modal-content">
-            <h2 id="trackTitle">Track Your Order</h2>
-            <input type="text" id="trackOrderId" placeholder="Enter Order ID / ऑर्डर ID टाका">
-            <button onclick="trackOrder()" id="checkStatusBtn">Check Status</button>
-            <div id="trackResult"></div>
-            <div class="modal-btns">
-                <button class="cancel-btn" onclick="closeModal('trackModal')" id="closeTrackBtn">Close</button>
+
+    <!-- Rating Modal -->
+    <div class="modal" id="ratingModal">
+        <div class="modal-content rating-modal">
+            <div class="modal-header">
+                <h2>Rate This Item ⭐</h2>
+                <button class="close-btn" onclick="closeModal('ratingModal')">&times;</button>
             </div>
+            <h3 id="ratingItemName"></h3>
+            <div class="stars" id="stars">
+                <span class="star" onclick="setRating(1)">★</span>
+                <span class="star" onclick="setRating(2)">★</span>
+                <span class="star" onclick="setRating(3)">★</span>
+                <span class="star" onclick="setRating(4)">★</span>
+                <span class="star" onclick="setRating(5)">★</span>
+            </div>
+            <button class="place-order-btn" onclick="submitRating()">Submit Rating</button>
         </div>
     </div>
-    <div id="successModal" class="modal">
-        <div class="modal-content">
-            <h2 id="successTitle">Order Placed! 🎉</h2>
-            <div class="order-info" id="orderIdDisplay"></div>
-            <p style="margin-top:15px; font-size:0.9rem; color:#aaa;" id="successMsg">Save this Order ID to track your order</p>
-            <div class="modal-btns">
-                <button onclick="closeModal('successModal')" id="okBtn">OK</button>
-            </div>
-        </div>
-    </div>  <script>
-        const YOUR_WHATSAPP = "917021581312";
-        const YOUR_UPI = "sljaimaharashtra51-1@okaxis";
-        const YOUR_NAME = "SANTOSH";
-        let currentLang = 'en';
-        let cart = [];
-        let activeCategory = 'all';
-        let appliedCoupon = null;
-        let discountAmount = 0;
-        let orders = JSON.parse(localStorage.getItem('orders') || '{}');
-        const coupons = { 'FIRST50': { discount: 50, minOrder: 0, desc: '₹50 Off' }, 'PRATIBHA100': { discount: 100, minOrder: 400, desc: '₹100 Off on ₹400+' } };
-        const translations = { en: { title: "🍽️ Online Meals", tagline: "Meals from Chief Pratibha's Kitchen", orderBtn: "Add to Cart 🛒", cartText: "Cart:", itemsText: "Items", langBtn: "मराठी", trackBtn: "Track Order", formTitle: "Enter Delivery Details", namePh: "Your Name", addressPh: "Full Address", landmarkPh: "Landmark", phonePh: "Mobile Number", cancelBtn: "Cancel", submitBtn: "Order on WhatsApp", trackTitle: "Track Your Order", trackPh: "Enter Order ID", checkStatusBtn: "Check Status", closeTrackBtn: "Close", successTitle: "Order Placed! 🎉", successMsg: "Save this Order ID to track your order", okBtn: "OK", statusSteps: ["Order Received", "Preparing", "Out for Delivery", "Delivered"], searchPh: "Search for Biryani, Pizza, Vada Pav...", allCat: "All", applyCouponBtn: "Apply", couponApplied: "Coupon Applied!", couponInvalid: "Invalid Coupon", couponMinOrder: "Min Order ₹" }, mr: { title: "🍽️ ऑनलाईन जेवण", tagline: "Chief Pratibha च्या Kitchen मधून गरमागरम जेवण", orderBtn: "कार्ट मध्ये टाका 🛒", cartText: "कार्ट:", itemsText: "पदार्थ", langBtn: "English", trackBtn: "ऑर्डर ट्रॅक करा", formTitle: "डिलिव्हरी डिटेल्स भरा", namePh: "तुमचं नाव", addressPh: "पूर्ण पत्ता", landmarkPh: "जवळची खूण", phonePh: "मोबाईल नंबर", cancelBtn: "रद्द करा", submitBtn: "WhatsApp वर Order करा", trackTitle: "तुमची ऑर्डर ट्रॅक करा", trackPh: "ऑर्डर ID टाका", checkStatusBtn: "Status बघा", closeTrackBtn: "बंद करा", successTitle: "ऑर्डर झाली! 🎉", successMsg: "ऑर्डर ट्रॅक करण्यासाठी हा Order ID सेव्ह करा", okBtn: "ठीक आहे", statusSteps: ["ऑर्डर मिळाली", "तयार करत आहोत", "डिलिव्हरी साठी निघाली", "डिलिव्हर झाली"], searchPh: "बिर्याणी, पिझ्झा, वडा पाव शोधा...", allCat: "सगळे", applyCouponBtn: "लागू करा", couponApplied: "कूपन लागू झाला!", couponInvalid: "चुकीचा कूपन", couponMinOrder: "किमान ऑर्डर ₹" } };
-        const categories = [ {id: 'all', name_en: 'All', name_mr: 'सगळे'}, {id: 'chicken', name_en: 'Chicken', name_mr: 'चिकन'}, {id: 'rice', name_en: 'Rice & Khichdi', name_mr: 'भात & खिचडी'}, {id: 'chinese', name_en: 'Chinese & Momos', name_mr: 'चायनीज & मोमोज'}, {id: 'pizza', name_en: 'Pizza & Pasta', name_mr: 'पिझ्झा & पास्ता'}, {id: 'roti', name_en: 'Roti & Paratha', name_mr: 'पोळी & पराठा'}, {id: 'snacks', name_en: 'Snacks', name_mr: 'स्नॅक्स'}, {id: 'maha', name_en: 'Maharashtrian', name_mr: 'महाराष्ट्रीयन'}, {id: 'sweet', name_en: 'Sweets', name_mr: 'गोड'} ];
-        const menuItems = [
-            {id: 1, name_en: "Chicken Biryani", name_mr: "चिकन बिर्याणी", desc_en: "Fragrant Chicken Biryani with Raita", desc_mr: "सुगंधी चिकन बिर्याणी रायता सोबत", price: 250, img: "https://i.postimg.cc/8CvJ5tQr/chicken-biryani.jpg", cat: 'chicken', veg: false, tag: 'best'},
-            {id: 2, name_en: "Chicken Curry", name_mr: "चिकन करी", desc_en: "Homestyle Chicken Curry", desc_mr: "घरगुती चिकन करी", price: 220, img: "https://i.postimg.cc/G8x5V4wn/chicken-curry-jpg.jpg", cat: 'chicken', veg: false},
-            {id: 3, name_en: "Chicken 65 (200 gm)", name_mr: "चिकन 65 (200 ग्रॅम)", desc_en: "Spicy Chicken 65 Starter", desc_mr: "मसालेदार चिकन 65 स्टार्टर", price: 165, img: "https://i.postimg.cc/PPTtCDrC/Chiken65.jpg", cat: 'chicken', veg: false, tag: 'best'},
-            {id: 4, name_en: "Pratibha Special Chicken Thali", name_mr: "प्रतिभा स्पेशल चिकन थाळी", desc_en: "With Tambda & Pandhra Rassa", desc_mr: "तांबडा-पांढरा रस्सा सोबत", price: 444, img: "https://i.postimg.cc/bSYBhqpz/Pratibha-special-thali-jpg.jpg", cat: 'chicken', veg: false, tag: 'chef'},
-            {id: 5, name_en: "Chicken Fried Rice", name_mr: "चिकन फ्राईड राईस", desc_en: "Chinese Style Chicken Fried Rice", desc_mr: "चायनीज स्टाइल चिकन फ्राईड राईस", price: 180, img: "https://i.postimg.cc/hz156XWB/Chiken-fried-rice.jpg", cat: 'chicken', veg: false},
-            {id: 6, name_en: "Dal Khichdi", name_mr: "डाळ खिचडी", desc_en: "Comfort Dal Khichdi with Ghee", desc_mr: "आरामदायी डाळ खिचडी तुपासोबत", price: 130, img: "https://i.postimg.cc/MMmFNn22/Dal-Khichdi-jpg.jpg", cat: 'rice', veg: true},
-            {id: 7, name_en: "Veg Fried Rice", name_mr: "व्हेज फ्राईड राईस", desc_en: "Chinese Style Veg Fried Rice", desc_mr: "चायनीज स्टाइल व्हेज फ्राईड राईस", price: 150, img: "https://i.postimg.cc/gXHTQxFc/Vegetable-Fried-Rice.jpg", cat: 'rice', veg: true},
-            {id: 8, name_en: "Kadhi Pakoda Rice", name_mr: "कढी पकोडा राईस", desc_en: "Punjabi Kadhi with Pakoda & Rice", desc_mr: "पंजाबी कढी पकोडा भात सोबत", price: 110, img: "https://i.postimg.cc/k6vpz23B/Dahi-pakoda-rice.jpg", cat: 'rice', veg: true},
-            {id: 9, name_en: "Sabudana Khichdi", name_mr: "साबुदाणा खिचडी", desc_en: "Upwas Special with Peanuts & Potato", desc_mr: "उपवास स्पेशल शेंगदाणे बटाटा सोबत", price: 60, img: "https://i.postimg.cc/Z9kpNj9V/sabudana-khichdi.jpg", cat: 'rice', veg: true},
-            {id: 10, name_en: "Sabudana Vada (2 pcs)", name_mr: "साबुदाणा वडा (2 नग)", desc_en: "Crispy Sabudana Vada", desc_mr: "कुरकुरीत साबुदाणा वडा", price: 70, img: "https://i.postimg.cc/ygybtDq5/Sabudana-vada-jpg.jpg", cat: 'snacks', veg: true},
-            {id: 11, name_en: "Veg Chowmein Hakka Noodles", name_mr: "व्हेज चाऊमीन हक्का नुडल्स", desc_en: "Street Style Hakka Noodles", desc_mr: "स्ट्रीट स्टाइल हक्का नुडल्स", price: 120, img: "https://i.postimg.cc/Vdfd3pt3/Veg-hakka-noodles.jpg", cat: 'chinese', veg: true},
-            {id: 12, name_en: "Veg Manchurian", name_mr: "व्हेज मंचुरियन", desc_en: "Dry Veg Manchurian", desc_mr: "ड्राय व्हेज मंचुरियन", price: 99, img: "https://i.postimg.cc/FdVB8Y51/cabbage-manchurian-dry.jpg", cat: 'chinese', veg: true},
-            {id: 13, name_en: "Steam Veg Momos (8 pcs)", name_mr: "स्टीम व्हेज मोमोज (8 नग)", desc_en: "Steamed Veg Momos with Chutney", desc_mr: "स्टीम व्हेज मोमोज चटणी सोबत", price: 110, img: "https://i.postimg.cc/9QZqK8kV/steam-momos.jpg", cat: 'chinese', veg: true},
-            {id: 14, name_en: "Fry Veg Momos (8 pcs)", name_mr: "फ्राय व्हेज मोमोज (8 नग)", desc_en: "Crispy Fried Veg Momos", desc_mr: "कुरकुरीत फ्राय व्हेज मोमोज", price: 130, img: "https://i.postimg.cc/q6B5Tp4r/fried-veg-momo.jpg", cat: 'chinese', veg: true},
-            {id: 15, name_en: "Butter Pav Bhaji", name_mr: "बटर पावभाजी", desc_en: "Butter Pav Bhaji with Cheese & Butter", desc_mr: "बटर पाव भाजी चीज आणि लोणी सोबत", price: 140, img: "https://i.postimg.cc/zbFc6ymQ/pavbhaji-jpg.jpg", cat: 'chinese', veg: true            {id: 16, name_en: "Cheese Pav Bhaji", name_mr: "चीज पावभाजी", desc_en: "Extra Cheese Pav Bhaji", desc_mr: "एक्स्ट्रा चीज पाव भाजी", price: 160, img: "https://i.postimg.cc/LYpWxzWG/cheese-pav-bhaji.jpg", cat: 'chinese', veg: true},
-            {id: 17, name_en: "Extra Pav", name_mr: "एक्स्ट्रा पाव", desc_en: "Extra Pav - 2 Pieces", desc_mr: "एक्स्ट्रा पाव - 2 नग", price: 15, img: "", cat: 'chinese', veg: true},
-            {id: 18, name_en: "Pan Veg Pizza", name_mr: "पॅन व्हेज पिझ्झा", desc_en: "Pan Crust Veg Pizza", desc_mr: "पॅन क्रस्ट व्हेज पिझ्झा", price: 140, img: "https://i.postimg.cc/WFwHCdLs/Pan-mix-veg-pizza.jpg", cat: 'pizza', veg: true},
-            {id: 19, name_en: "Corn Pizza", name_mr: "कॉर्न पिझ्झा", desc_en: "Sweet Corn Pizza", desc_mr: "स्वीट कॉर्न पिझ्झा", price: 140, img: "https://i.postimg.cc/nCpDnMy1/corn-pan-pizza.jpg", cat: 'pizza', veg: true},
-            {id: 20, name_en: "Onion Pizza", name_mr: "कांदा पिझ्झा", desc_en: "Onion Topping Pizza", desc_mr: "कांदा टॉपिंग पिझ्झा", price: 99, img: "https://i.postimg.cc/cr0nd6pm/onion-pan-pizza-jpg.jpg", cat: 'pizza', veg: true},
-            {id: 21, name_en: "Paneer Pizza", name_mr: "पनीर पिझ्झा", desc_en: "Paneer Topping Pizza", desc_mr: "पनीर टॉपिंग पिझ्झा", price: 170, img: "https://i.postimg.cc/tZNMws0L/paneer-pan-pizza-jpg.jpg", cat: 'pizza', veg: true},
-            {id: 22, name_en: "Red Sauce Pasta", name_mr: "रेड सॉस पास्ता", desc_en: "Penne in Red Sauce", desc_mr: "रेड सॉस मध्ये पेन्ने पास्ता", price: 120, img: "https://i.postimg.cc/1nrj28xJ/red-sauce-pasta-jpg.jpg", cat: 'pizza', veg: true},
-            {id: 23, name_en: "Aloo Paratha", name_mr: "आलू पराठा", desc_en: "Stuffed Potato Paratha with Curd/Loni", desc_mr: "बटाटा भरलेला पराठा दही/लोणी सोबत", price: 60, img: "https://i.postimg.cc/sBpTRFvr/aloo-paratha-gpg.jpg", cat: 'roti', veg: true},
-            {id: 24, name_en: "Cheese Aloo Paratha", name_mr: "चीज आलू पराठा", desc_en: "Cheese Stuffed Aloo Paratha", desc_mr: "चीज भरलेला आलू पराठा", price: 80, img: "https://i.postimg.cc/vgtNk4FB/Aloo-cheese-paratha.jpg", cat: 'roti', veg: true},
-            {id: 25, name_en: "Aloo Butter Paratha", name_mr: "आलू बटर पराठा", desc_en: "Butter Stuffed Aloo Paratha", desc_mr: "बटर भरलेला आलू पराठा", price: 60, img: "https://i.postimg.cc/r0NP3DXp/aloo-butter-parstha.jpg", cat: 'roti', veg: true},
-            {id: 26, name_en: "Chapati (Per Pc)", name_mr: "चपाती (प्रति नग)", desc_en: "Soft Wheat Chapati", desc_mr: "मऊ गव्हाची चपाती", price: 15, img: "", cat: 'roti', veg: true},
-            {id: 27, name_en: "Jwari Bhakri (Per Pc)", name_mr: "ज्वारीची भाकरी (प्रति नग)", desc_en: "Fresh Jwari Bhakri", desc_mr: "ताजी ज्वारीची भाकरी", price: 30, img: "https://i.postimg.cc/kBqb7D0s/Jwari-Bhakri-jpg.jpg", cat: 'roti', veg: true},
-            {id: 28, name_en: "Veg Cheese Sandwich", name_mr: "व्हेज चीज सँडविच", desc_en: "Grilled Veg Cheese Sandwich", desc_mr: "ग्रील्ड व्हेज चीज सँडविच", price: 60, img: "https://i.postimg.cc/gnJtLBBH/veg-sandwich-gpg.jpg", cat: 'snacks', veg: true},
-            {id: 29, name_en: "Vada Pav (2 pcs)", name_mr: "वडा पाव (2 नग)", desc_en: "Mumbai Style Vada Pav with Chutney", desc_mr: "मुंबई स्टाइल वडा पाव चटणी सोबत", price: 50, img: "https://i.postimg.cc/1nrj28xv/vada-paav.jpg", cat: 'snacks', veg: true, tag: 'best'},
-            {id: 30, name_en: "Pattice (2 pcs)", name_mr: "पॅटीस (2 नग)", desc_en: "Crispy Veg Pattice", desc_mr: "कुरकुरीत व्हेज पॅटीस", price: 50, img: "https://i.postimg.cc/BLBVkj9S/Pattice.jpg", cat: 'snacks', veg: true},
-            {id: 31, name_en: "Pohe", name_mr: "पोहे", desc_en: "Kanda Poha with Lemon & Sev", desc_mr: "कांदा पोहे लिंबू आणि शेव सोबत", price: 40, img: "https://i.postimg.cc/3kxLQDYD/poha.jpg", cat: 'maha', veg: true}
+
+<script>
+    const YOUR_WHATSAPP = "917021581312";
+    const YOUR_NAME = "SANTOSH";
+    const ADMIN_PASS = "pratibha123";
+    const MIN_ORDER = 150;
+
+    let currentLang = 'en';
+    let cart = [];
+    let activeCategory = 'all';
+    let appliedCoupon = null;
+    let discountAmount = 0;
+    let filterType = 'all';
+    let searchQuery = '';
+    let comboSelection = [];
+    let isDarkMode = true;
+    let currentRatingItem = null;
+    let currentRating = 0;
+
+    let users = JSON.parse(localStorage.getItem('users')) || {};
+    let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+    let orders = JSON.parse(localStorage.getItem('orders')) || [];
+    let ratings = JSON.parse(localStorage.getItem('ratings')) || {};
+    let menuItems = JSON.parse(localStorage.getItem('menuItems')) || [];
+
+    if(menuItems.length === 0) {
+        menuItems = [
+            { id: 1, name: "Chicken Biryani", nameMr: "चिकन बिर्याणी", price: 250, img: "https://i.postimg.cc/bSYBhqpz/Pratibha-special-thali-jpg.jpg", cat: 'chicken', veg: false, bestseller: true, rating: 4.8, ratingCount: 120 },
+            { id: 2, name: "Chicken Curry", nameMr: "चिकन करी", price: 220, img: "https://i.postimg.cc/G8x5V4wn/chicken-curry-jpg.jpg", cat: 'chicken', veg: false, bestseller: false, rating: 4.5, ratingCount: 85 },
+            { id: 3, name: "Chicken 65 (200 gm)", nameMr: "चिकन 65 (200 ग्रॅम)", price: 165, img: "https://i.postimg.cc/PPTtCDrC/Chicken-65-jpg.jpg", cat: 'chicken', veg: false, bestseller: true, rating: 4.7, ratingCount: 95 },
+            { id: 4, name: "Pratibha Special Chicken Thali", nameMr: "प्रतिभा स्पेशल चिकन थाळी", price: 444, img: "https://i.postimg.cc/bSYBhqpz/Pratibha-special-thali-jpg.jpg", cat: 'chicken', veg: false, bestseller: true, rating: 4.9, ratingCount: 200 },
+            { id: 5, name: "Dal Khichdi", nameMr: "डाळ खिचडी", price: 130, img: "https://i.postimg.cc/MMmFNn22/Dal-Khichdi-jpg.jpg", cat: 'rice', veg: true, bestseller: false, rating: 4.3, ratingCount: 60 },
+            { id: 6, name: "Veg Fried Rice", nameMr: "व्हेज फ्राईड राईस", price: 150, img: "https://i.postimg.cc/hz156XWB/Chiken-fried-rice.jpg", cat: 'rice', veg: true, bestseller: false, rating: 4.4, ratingCount: 70 },
+            { id: 7, name: "Chicken Fried Rice", nameMr: "चिकन फ्राईड राईस", price: 180, img: "https://i.postimg.cc/hz156XWB/Chiken-fried-rice.jpg", cat: 'rice', veg: false, bestseller: false, rating: 4.6, ratingCount: 80 },
+            { id: 8, name: "Kadhi Pakoda Rice", nameMr: "कढी पकोडा राईस", price: 110, img: "https://i.postimg.cc/MMmFNn22/Dal-Khichdi-jpg.jpg", cat: 'rice', veg: true, bestseller: false, rating: 4.2, ratingCount: 45 },
+            { id: 9, name: "Sabudana Khichdi", nameMr: "साबुदाणा खिचडी", price: 60, img: "https://i.postimg.cc/MMmFNn22/Dal-Khichdi-jpg.jpg", cat: 'rice', veg: true, bestseller: false, rating: 4.1, ratingCount: 40 },
+            { id: 10, name: "Sabudana Vada (2 pcs)", nameMr: "साबुदाणा वडा (2 नग)", price: 70, img: "https://i.postimg.cc/ygybtDq5/Sabudana-vada-jpg.jpg", cat: 'rice', veg: true, bestseller: false, rating: 4.3, ratingCount: 55 },
+            { id: 11, name: "Veg Chowmein Hakka Noodles", nameMr: "व्हेज चाऊमीन हक्का नुडल्स", price: 120, img: "https://i.postimg.cc/Vdfd3pt3/hakka-noodles-veg-jpg.jpg", cat: 'chinese', veg: true, bestseller: false, rating: 4.4, ratingCount: 65 },
+            { id: 12, name: "Veg Manchurian", nameMr: "व्हेज मंचुरियन", price: 99, img: "https://i.postimg.cc/Vdfd3pt3/hakka-noodles-veg-jpg.jpg", cat: 'chinese', veg: true, bestseller: true, rating: 4.6, ratingCount: 90 },
+            { id: 13, name: "Steam Veg Momos (8 pcs)", nameMr: "स्टीम व्हेज मोमोज (8 नग)", price: 110, img: "https://i.postimg.cc/Q93zfpz2/fried-momo-jpg.jpg", cat: 'chinese', veg: true, bestseller: false, rating: 4.5, ratingCount: 75 },
+            { id: 14, name: "Fry Veg Momos (8 pcs)", nameMr: "फ्राय व्हेज मोमोज (8 नग)", price: 130, img: "https://i.postimg.cc/Q93zfpz2/fried-momo-jpg.jpg", cat: 'chinese', veg: true, bestseller: false, rating: 4.5, ratingCount: 75 },
+            { id: 15, name: "Butter Pav Bhaji", nameMr: "बटर पावभाजी", price: 140, img: "https://i.postimg.cc/zbFc6ymQ/pavbhaji-jpg.jpg", cat: 'pavbhaji', veg: true, bestseller: true, rating: 4.7, ratingCount: 150 },
+            { id: 16, name: "Cheese Pav Bhaji", nameMr: "चीज पावभाजी", price: 160, img: "https://i.postimg.cc/LYpWxzWG/cheese-pav-bhaji.jpg", cat: 'pavbhaji', veg: true, bestseller: true, rating: 4.8, ratingCount: 160 },
+            { id: 17, name: "Extra Pav", nameMr: "एक्स्ट्रा पाव", price: 15, img: "https://i.postimg.cc/zbFc6ymQ/pavbhaji-jpg.jpg", cat: 'pavbhaji', veg: true, bestseller: false, rating: 4.0, ratingCount: 20 },
+            { id: 18, name: "Pan Veg Pizza", nameMr: "पॅन व्हेज पिझ्झा", price: 140, img: "https://i.postimg.cc/tZNMws0L/paneer-pan-pizza-jpg.jpg", cat: 'pizza', veg: true, bestseller: false, rating: 4.4, ratingCount: 70 },
+            { id: 19, name: "Corn Pizza", nameMr: "कॉर्न पिझ्झा", price: 140, img: "https://i.postimg.cc/nCpDnMy1/corn-pan-pizza.jpg", cat: 'pizza', veg: true, bestseller: false, rating: 4.3, ratingCount: 60 },
+            { id: 20, name: "Onion Pizza", nameMr: "कांदा पिझ्झा", price: 99, img: "https://i.postimg.cc/cr0nd6pm/onion-pan-pizza-jpg.jpg", cat: 'pizza', veg: true, bestseller: false, rating: 4.2, ratingCount: 50 },
+            { id: 21, name: "Paneer Pizza", nameMr: "पनीर पिझ्झा", price: 170, img: "https://i.postimg.cc/tZNMws0L/paneer-pan-pizza-jpg.jpg", cat: 'pizza', veg: true, bestseller: true, rating: 4.7, ratingCount: 110 },
+            { id: 22, name: "Red Sauce Pasta", nameMr: "रेड सॉस पास्ता", price: 120, img: "https://i.postimg.cc/1nrj28xJ/red-sauce-pasta-jpg.jpg", cat: 'pizza', veg: true, bestseller: false, rating: 4.5, ratingCount: 80 },
+            { id: 23, name: "Aloo Paratha", nameMr: "आलू पराठा", price: 60, img: "https://i.postimg.cc/kBqb7D0s/Jwari-Bhakri-jpg.jpg", cat: 'roti', veg: true, bestseller: false, rating: 4.4, ratingCount: 65 },
+            { id: 24, name: "Cheese Aloo Paratha", nameMr: "चीज आलू पराठा", price: 80, img: "https://i.postimg.cc/kBqb7D0s/Jwari-Bhakri-jpg.jpg", cat: 'roti', veg: true, bestseller: true, rating: 4.6, ratingCount: 85 },
+            { id: 25, name: "Chapati (per pc)", nameMr: "चपाती (प्रति नग)", price: 15, img: "https://i.postimg.cc/kBqb7D0s/Jwari-Bhakri-jpg.jpg", cat: 'roti', veg: true, bestseller: false, rating: 4.0, ratingCount: 30 },
+            { id: 26, name: "Jowar Bhakri (per pc)", nameMr: "ज्वारीची भाकरी (प्रति नग)", price: 30, img: "https://i.postimg.cc/kBqb7D0s/Jwari-Bhakri-jpg.jpg", cat: 'roti', veg: true, bestseller: false, rating: 4.3, ratingCount: 50 },
+            { id: 27, name: "Veg Cheese Sandwich", nameMr: "व्हेज चीज सँडविच", price: 60, img: "https://i.postimg.cc/1nrj28xv/vada-paav.jpg", cat: 'snacks', veg: true, bestseller: false, rating: 4.2, ratingCount: 45 },
+            { id: 28, name: "Vada Pav (2 pcs)", nameMr: "वडा पाव (2 नग)", price: 50, img: "https://i.postimg.cc/1nrj28xv/vada-paav.jpg", cat: 'snacks', veg: true, bestseller: true, rating: 4.8, ratingCount: 200 },
+            { id: 29, name: "Patties (2 pcs)", nameMr: "पॅटीस (2 नग)", price: 50, img: "https://i.postimg.cc/1nrj28xv/vada-paav.jpg", cat: 'snacks', veg: true, bestseller: false, rating: 4.1, ratingCount: 35 },
+            { id: 30, name: "Pohe", nameMr: "पोहे", price: 40, img: "https://i.postimg.cc/MMmFNn22/Dal-Khichdi-jpg.jpg", cat: 'snacks', veg: true, bestseller: false, rating: 4.3, ratingCount: 55 },
+            { id: 31, name: "Upma", nameMr: "उप्पीट / उपमा", price: 40, img: "https://i.postimg.cc/MMmFNn22/Dal-Khichdi-jpg.jpg", cat: 'snacks', veg: true, bestseller: false, rating: 4.2, ratingCount: 40 },
+            { id: 32, name: "Puri Bhaji", nameMr: "पुरी भाजी", price: 80, img: "https://i.postimg.cc/1nrj28xv/vada-paav.jpg", cat: 'snacks', veg: true, bestseller: false, rating: 4.4, ratingCount: 60 },
+            { id: 33, name: "Aamras Puri (Seasonal)", nameMr: "आमरस पुरी (हंगामांनुसार)", price: 150, img: "https://i.postimg.cc/1nrj28xv/vada-paav.jpg", cat: 'snacks', veg: true, bestseller: false, rating: 4.6, ratingCount: 70 },
+            { id: 34, name: "Korean Cheese Potato Balls", nameMr: "कोरियन चीज पोटॅटो क्रिस्पी बॉल्स", price: 149, img: "https://i.postimg.cc/WqpHvsTT/korian-cheese-potato-balls.jpg", cat: 'snacks', veg: true, bestseller: true, rating: 4.7, ratingCount: 90 },
+            { id: 35, name: "Dahi Dhapathe", nameMr: "दही धपाटे", price: 60, img: "https://i.postimg.cc/kBqb7D0s/Jwari-Bhakri-jpg.jpg", cat: 'maharashtrian', veg: true, bestseller: false, rating: 4.3, ratingCount: 50 },
+            { id: 36, name: "Kothimbir Vadi (200 gm)", nameMr: "कोथिंबीर वडी (200 ग्रॅम)", price: 90, img: "https://i.postimg.cc/ygybtDq5/Sabudana-vada-jpg.jpg", cat: 'maharashtrian', veg: true, bestseller: false, rating: 4.4, ratingCount: 60 },
+            { id: 37, name: "Methi Vadi (200 gm)", nameMr: "मेथी वडी (200 ग्रॅम)", price: 90, img: "https://i.postimg.cc/ygybtDq5/Sabudana-vada-jpg.jpg", cat: 'maharashtrian', veg: true, bestseller: false, rating: 4.3, ratingCount: 55 },
+            { id: 38, name: "Palak Vadi (200 gm)", nameMr: "पालक वडी (200 ग्रॅम)", price: 90, img: "https://i.postimg.cc/ygybtDq5/Sabudana-vada-jpg.jpg", cat: 'maharashtrian', veg: true, bestseller: false, rating: 4.3, ratingCount: 50 },
+            { id: 39, name: "Gulab Jamun", nameMr: "गुलाबजाम", price: 60, img: "https://i.postimg.cc/BLBVkjWV/Gulabjam-jpg.jpg", cat: 'snacks', veg: true, bestseller: false, rating: 4.5, ratingCount: 75 }
         ];
-        function toggleLang() { currentLang = currentLang === 'en'? 'mr' : 'en'; updateUI(); }
-        function updateUI() { const t = translations[currentLang]; document.getElementById('title').textContent = t.title; document.getElementById('tagline').textContent = t.tagline; document.getElementById('langBtn').textContent = t.langBtn; document.getElementById('trackBtn').textContent = t.trackBtn; document.getElementById('formTitle').textContent = t.formTitle; document.getElementById('custName').placeholder = t.namePh; document.getElementById('custAddress').placeholder = t.addressPh; document.getElementById('custLandmark').placeholder = t.landmarkPh; document.getElementById('custPhone').placeholder = t.phonePh; document.getElementById('cancelBtn').textContent = t.cancelBtn; document.getElementById('submitBtn').textContent = t.submitBtn; document.getElementById('trackTitle').textContent = t.trackTitle; document.getElementById('trackOrderId').placeholder = t.trackPh; document.getElementById('checkStatusBtn').textContent = t.checkStatusBtn; document.getElementById('closeTrackBtn').textContent = t.closeTrackBtn; document.getElementById('successTitle').textContent = t.successTitle; document.getElementById('successMsg').textContent = t.successMsg; document.getElementById('okBtn').textContent = t.okBtn; document.getElementById('searchInput').placeholder = t.searchPh; document.getElementById('applyCouponBtn').textContent = t.applyCouponBtn; renderCategories(); renderMenu(); updateCart(); }
-        function renderCategories() { const t = translations[currentLang]; const filters = document.getElementById('categoryFilters'); filters.innerHTML = ''; categories.forEach(cat => { const name = currentLang === 'en'? cat.name_en : cat.name_mr; filters.innerHTML += `<button class="cat-btn ${activeCategory === cat.id? 'active' : ''}" onclick="setCategory('${cat.id}')">${name}</button>`; }); }
-        function setCategory(catId) { activeCategory = catId; renderCategories(); renderMenu(); }
-        function renderMenu() { const menu = document.getElementById('menu'); const t = translations[currentLang]; const searchTerm = document.getElementById('searchInput').value.toLowerCase(); menu.innerHTML = ''; const filteredItems = menuItems.filter(item => { const matchesCategory = activeCategory === 'all' || item.cat === activeCategory; const name = currentLang === 'en'? item.name_en : item.name_mr; const matchesSearch = name.toLowerCase().includes(searchTerm); return matchesCategory && matchesSearch; }); filteredItems.forEach(item => { const name = currentLang === 'en'? item.name_en : item.name_mr; const desc = currentLang === 'en'? item.desc_en : item.desc_mr; const vegIcon = item.veg? '<span class="veg-dot"></span>' : '<span class="non-veg-dot"></span>'; const tag = item.tag? `<div class="tag tag-${item.tag}">${item.tag.toUpperCase()}</div>` : ''; const imgHtml = item.img? `<img src="${item.img}" alt="${name}">` : `<div class="no-photo">📷 Photo Coming Soon</div>`; menu.innerHTML += `<div class="item">${tag}${imgHtml}<h3>${vegIcon} ${name}</h3><p>${desc}</p><div class="price">₹${item.price}</div><button onclick="addToCart(${item.id})">${t.orderBtn}</button></div>`; }); }
-        function filterItems() { renderMenu(); }
-        function addToCart(id) { const item = menuItems.find(i => i.id === id); cart.push(item); updateCart(); }
-        function updateCart() { const t = translations[currentLang]; const total = cart.reduce((sum, item) => sum + item.price, 0); document.getElementById('cart').innerHTML = `${t.cartText} ${cart.length} ${t.itemsText} | ₹${total}`; updateBill(); }
-        function showCustomerForm() { if (cart.length === 0) { alert(currentLang === 'en'? 'Cart is empty!' : 'कार्ट रिकामे आहे!'); return; } document.getElementById('customerModal').style.display = 'block'; updateBill(); }
-        function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
-        function showTrackModal() { document.getElementById('trackModal').style.display = 'block'; }
-        function applyCoupon() { const code = document.getElementById('couponCode').value.toUpperCase(); const t = translations[currentLang]; const subtotal = cart.reduce((sum, item) => sum + item.price, 0); if (coupons[code]) { if (subtotal >= coupons[code].minOrder) { appliedCoupon = code; discountAmount = coupons[code].discount; document.getElementById('couponMsg').innerHTML = `<div class="discount-text">${t.couponApplied} ${coupons[code].desc}</div>`; } else { document.getElementById('couponMsg').innerHTML = `<div style="color:#ff4444;text-align:center;">${t.couponMinOrder}${coupons[code].minOrder}</div>`; appliedCoupon = null; discountAmount = 0; } } else { document.getElementById('couponMsg').innerHTML = `<div style="color:#ff4444;text-align:center;">${t.couponInvalid}</div>`; appliedCoupon = null; discountAmount = 0; } updateBill(); }
-        function updateBill() { const subtotal = cart.reduce((sum, item) => sum + item.price, 0); const finalTotal = subtotal - discountAmount; let billHtml = `<div class="total-row"><span>Subtotal:</span><span>₹${subtotal}</span></div>`; if (discountAmount > 0) { billHtml += `<div class="total-row" style="color:#00FF00;"><span>Discount (${appliedCoupon}):</span><span>-₹${discountAmount}</span></div>`; } billHtml += `<div class="total-row final"><span>Total:</span><span>₹${finalTotal}</span></div>`; document.getElementById('billDetails').innerHTML = billHtml; }
-        function copyUPI() { navigator.clipboard.writeText(YOUR_UPI); alert(currentLang === 'en'? 'UPI ID Copied!' : 'UPI ID Copy झाला!'); }
-        function submitOrder() { const name = document.getElementById('custName').value.trim(); const address = document.getElementById('custAddress').value.trim(); const landmark = document.getElementById('custLandmark').value.trim(); const phone = document.getElementById('custPhone').value.trim(); const slot = document.getElementById('deliverySlot').value; if (!name ||!address ||!landmark ||!phone ||!slot) { alert(currentLang === 'en'? 'Please fill all details!' : 'कृपया सर्व माहिती भरा!'); return; } const orderId = 'PK' + Date.now().toString().slice(-6); const subtotal = cart.reduce((sum, item) => sum + item.price, 0); const finalTotal = subtotal - discountAmount; orders[orderId] = { items: cart, customer: {name, address, landmark, phone, slot}, total: finalTotal, status: 0, timestamp: Date.now() }; localStorage.setItem('orders', JSON.stringify(orders)); let message = currentLang === 'en'? `*Pratibha's Kitchen* 🙏\n\n*New Order*\nOrder ID: ${orderId}\n\n` : `*प्रतिभा किचन* 🙏\n\n*नवीन ऑर्डर*\nऑर्डर ID: ${orderId}\n\n`; message += currentLang === 'en'? `*Customer Details:*\n` : `*ग्राहकाची माहिती:*\n`; message += `Name: ${name}\nPhone: ${phone}\nAddress: ${address}\nLandmark: ${landmark}\nSlot: ${slot}\n\n`; message += currentLang === 'en'? `*Order Items:*\n` : `*ऑर्डरचे पदार्थ:*\n`; cart.forEach(item => { const itemName = currentLang === 'en'? item.name_en : item.name_mr; message += `• ${itemName} - ₹${item.price}\n`; }); message += `\nSubtotal: ₹${subtotal}`; if(discountAmount > 0) message += `\nDiscount: -₹${discountAmount} (${appliedCoupon})`; message += `\n*Total Amount: ₹${finalTotal}*`; message += `\n\n*Payment: Please pay via UPI after confirmation*\nUPI: ${YOUR_UPI}`; const url = `https://wa.me/${YOUR_WHATSAPP}?text=${encodeURIComponent(message)}`; window.open(url, '_blank'); closeModal('customerModal'); document.getElementById('orderIdDisplay').innerHTML = `Order ID: <strong>${orderId}</strong>`; document.getElementById('successModal').style.display = 'block'; cart = []; appliedCoupon = null; discountAmount = 0; updateCart(); document.getElementById('custName').value = ''; document.getElementById('custAddress').value = ''; document.getElementById('custLandmark').value = ''; document.getElementById('custPhone').value = ''; document.getElementById('deliverySlot').value = ''; document.getElementById('couponCode').value = ''; document.getElementById('couponMsg').innerHTML = ''; }
-        function trackOrder() { const orderId = document.getElementById('trackOrderId').value.trim(); const t = translations[currentLang]; const resultDiv = document.getElementById('trackResult'); if (!orderId) { resultDiv.innerHTML = `<p style="color:#ff4444;">Please enter Order ID</p>`; return; } if (orders[orderId]) { const order = orders[orderId]; let statusHtml = '<div class="status-box">'; t.statusSteps.forEach((step, idx) => { statusHtml += `<div class="status-step ${idx <= order.status? 'active' : ''}"><div class="status-dot"></div>${step}</div>`; }); statusHtml += '</div>'; statusHtml += `<div class="order-info"><strong>Order Total: ₹${order.total}</strong><br>Delivery Slot: ${order.customer.slot}</div>`; resultDiv.innerHTML = statusHtml; } else { resultDiv.innerHTML = `<p style="color:#ff4444;">Order not found!</p>`; } }
-        window.onclick = function(event) { if (event.target.classList.contains('modal')) { event.target.style.display = 'none'; } }
-        updateUI();
-    </script>
-</body>
-</html>
+        localStorage.setItem('menuItems', JSON.stringify(menuItems));
+    }
+
+    const categories = [
+        {id: 'all', name: 'All', nameMr: 'सर्व'},
+        {id: 'chicken', name: 'Chicken', nameMr: 'चिकन'},
+        {id: 'rice', name: 'Rice & Khichdi', nameMr: 'भात खिचडी'},
+        {id: 'chinese', name: 'Chinese & Momos', nameMr: 'चायनीज मोमोज'},
+        {id: 'pavbhaji', name: 'Pav Bhaji', nameMr: 'पाव भाजी'},
+        {id: 'pizza', name: 'Pizza & Pasta', nameMr: 'पिझ्झा पास्ता'},
+        {id: 'roti', name: 'Roti & Paratha', nameMr: 'पोळी पराठे'},
+        {id: 'snacks', name: 'Snacks', nameMr: 'स्नॅक्स'},
+        {id: 'maharashtrian', name: 'Maharashtrian', nameMr: 'महाराष्ट्रीयन'}
+    ];
+
+    const cardColors = [
+        'linear-gradient(135deg, #667EEA, #764BA2)', 'linear-gradient(135deg, #F093FB, #F5576C)', 'linear-gradient(135deg, #4FACFE, #00F2FE)',
+        'linear-gradient(135deg, #43E97B, #38F9D7)', 'linear-gradient(135deg, #FA709A, #FEE140)', 'linear-gradient(135deg, #30CFD0, #330867)',
+        'linear-gradient(135deg, #A8EDEA, #FED6E3)', 'linear-gradient(135deg, #F5F7FA, #C3CFE2)', 'linear-gradient(135deg, #E0C3FC, #8EC5FC)',
+        'linear-gradient(135deg, #F093FB, #F5576C)', 'linear-gradient(135deg, #FFECD2, #FCB69F)', 'linear-gradient(135deg, #FF9A9E, #FECFEF)'
+    ];
+
+    const coupons = { 'FIRST50': { discount: 50, type: 'flat' }, 'SAVE20': { discount: 20, type: 'percent' }, 'POINTS50': { discount: 50, type: 'points' } };
+
+    function init() {
+        if(currentUser) {
+            document.getElementById('custName').value = currentUser.name;
+            document.getElementById('custPhone').value = currentUser.phone;
+            updateLoyaltyBox();
+        }
+        renderCategories();
+        renderProducts();
+        updateCartBar();
+    }
+
+    function renderCategories() {
+        const catDiv = document.getElementById('categories');
+        catDiv.innerHTML = categories.map(c => `<button class="cat-btn ${c.id === activeCategory? 'active' : ''}" data-cat="${c.id}" onclick="setCategory('${c.id}')">${currentLang === 'en'? c.name : c.nameMr}</button>`).join('');
+    }
+
+    function setCategory(id) {
+        activeCategory = id;
+        renderCategories();
+        renderProducts();
+    }
+
+    function searchItems() {
+        searchQuery = document.getElementById('searchBar').value.toLowerCase();
+        renderProducts();
+    }
+
+    function filterVeg(isVeg) {
+        filterType = isVeg? 'veg' : 'nonveg';
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        event.target.classList.add('active');
+        renderProducts();
+    }
+
+    function filterBestseller() {
+        filterType = 'bestseller';
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        event.target.classList.add('active');
+        renderProducts();
+    }
+
+    function renderProducts() {
+        let filtered = menuItems.filter(item => {
+            let match = true;
+            if (activeCategory!== 'all') match = item.cat === activeCategory;
+            if (filterType === 'veg') match = match && item.veg;
+            if (filterType === 'nonveg') match = match &&!item.veg;
+            if (filterType === 'bestseller') match = match && item.bestseller;
+            if (searchQuery) match = match && (item.name.toLowerCase().includes(searchQuery) || item.nameMr.includes(searchQuery));
+            return match;
+        });
+
+        const productsDiv = document.getElementById('products');
+        productsDiv.innerHTML = filtered.map((item, index) => `
+            <div class="product-card" style="background: ${cardColors[index % cardColors.length]}">
+                <div class="veg-dot ${item.veg? 'veg' : 'nonveg'}"><span></span></div>
+                ${item.bestseller? '<div class="bestseller">🔥 Popular</div>' : ''}
+                <img src="${item.img}" alt="${item.name}">
+                <div class="product-info">
+                    <div class="product-name">${currentLang === 'en'? item.name : item.nameMr}</div>
+                    <div class="product-price">₹${item.price}</div>
+                    <div class="rating" onclick="openRating(${item.id})">⭐ ${item.rating} (${item.ratingCount})</div>
+                    <select class="spice-select" id="spice-${item.id}">
+                        <option value="">Spice Level</option>
+                        <option value="Mild">🌶️ Mild</option>
+                        <option value="Medium">🌶️🌶️ Medium</option>
+                        <option value="Hot">🌶️🌶️ Hot</option>
+                    </select>
+                    <input type="text" class="item-note" id="note-${item.id}" placeholder="Notes: Extra cheese, No onion...">
+                    <button class="add-btn" onclick="addToCart(${item.id})">Add to Cart</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function addToCart(id) {
+        const item = menuItems.find(i => i.id === id);
+        const spice = document.getElementById(`spice-${id}`).value;
+        const note = document.getElementById(`note-${id}`).value;
+        const cartId = `${id}-${spice}-${note}`;
+        const existing = cart.find(i => i.cartId === cartId);
+        if (existing) { existing.qty++; }
+        else { cart.push({...item, qty: 1, spice, note, cartId}); }
+        updateCartBar();
+    }
+
+    function updateCartBar() {
+        const count = cart.reduce((sum, i) => sum + i.qty, 0);
+        const total = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+        document.getElementById('cartCount').textContent = count;
+        document.getElementById('cartTotal').textContent = total;
+        document.getElementById('cartBar').classList.toggle('show', count > 0);
+    }
+
+    function renderCart() {
+        document.getElementById('cartItems').innerHTML = cart.map(item => `
+            <div class="cart-item">
+                <div>
+                    <div style="font-weight:700">${currentLang === 'en'? item.name : item.nameMr}</div>
+                    ${item.spice? `<div style="font-size:11px;color:var(--text2)">Spice: ${item.spice}</div>` : ''}
+                    ${item.note? `<div style="font-size:11px;color:var(--text2)">Note: ${item.note}</div>` : ''}
+                    <div style="color:#00FF88">₹${item.price}</div>
+                </div>
+                <div class="qty-control">
+                    <button class="qty-btn" onclick="changeQty('${item.cartId}', -1)">-</button>
+                    <span>${item.qty}</span>
+                    <button class="qty-btn" onclick="changeQty('${item.cartId}', 1)">+</button>
+                </div>
+            </div>
+        `).join('');
+        updateTotals();
+    }
+
+    function changeQty(cartId, delta) {
+        const item = cart.find(i => i.cartId === cartId);
+        item.qty += delta;
+        if (item.qty <= 0) cart = cart.filter(i => i.cartId!== cartId);
+        renderCart();
+        updateCartBar();
+    }
+
+    function applyCoupon() {
+        const code = document.getElementById('couponCode').value.toUpperCase();
+        const subtotal = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+
+        if (coupons[code]) {
+            if(coupons[code].type === 'points') {
+                if(!currentUser || currentUser.points < 100) {
+                    document.getElementById('discountText').textContent = 'Not enough points! Need 100 points.';
+                    return;
+                }
+                discountAmount = 50;
+                appliedCoupon = 'POINTS50';
+            } else {
+                appliedCoupon = code;
+                discountAmount = coupons[code].type === 'flat'? coupons[code].discount : Math.round(subtotal * coupons[code].discount / 100);
+            }
+            document.getElementById('discountText').textContent = `Coupon Applied! You saved ₹${discountAmount}`;
+        } else {
+            document.getElementById('discountText').textContent = 'Invalid Coupon';
+            discountAmount = 0;
+            appliedCoupon = null;
+        }
+        updateTotals();
+    }
+
+    function updateTotals() {
+        const subtotal = cart.reduce((sum, i) => sum + (i.price * i.qty), 0);
+        const final = subtotal + 40 - discountAmount;
+        document.getElementById('subtotal').textContent = subtotal;
+        document.getElementById('finalTotal').textContent = final;
+        document.getElementById('minOrderWarning').classList.toggle('show', subtotal < MIN_ORDER);
+    }
+
+    function openModal(id) {
+        if (id === 'cartModal') renderCart();
+        if (id === 'comboModal') renderComboBuilder();
+        document.getElementById(id).classList.add('show');
+    }
+
+    function closeModal(id) {
+        document.getElementById(id).classList.remove('show');
+    }
+
+    function placeOrder() {
+        const name = document.getElementById('custName').value;
+        const phone = document.getElementById('custPhone').value;
+        const address = document.getElementById('custAddress').value;
+  
